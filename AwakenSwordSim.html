@@ -1,0 +1,321 @@
+<!DOCTYPE html><!-- version 1.0 -->
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>覚醒武器シミュ（太刀）</title>
+    <style type="text/css">
+        div.notice{
+            padding: 5px;
+            border: solid black;
+            margin: 5px;
+        }
+
+        .sbox {
+            height: 14px;
+        }
+
+        span {
+            display: inline-block;
+            height: 100%;
+        }
+
+        .sbox div {
+            display: inline-block;
+            height: 14px;
+            font-size: 0px;
+        }
+
+        .s0 {
+            background-color: #bc0b43;
+            color: #bc0b43;
+        }
+
+        .s1 {
+            background: #f45600;
+            color: #f45600;
+        }
+
+        .s2 {
+            background: #ffc836;
+            color: #ffc836;
+        }
+
+        .s3 {
+            background: #4de200;
+            color: #4de200;
+        }
+
+        .s4 {
+            background: #647FF6;
+            color: #647FF6
+        }
+
+        .s5 {
+            background: #fff;
+            color: #fff;
+        }
+
+        .s6 {
+            background-color: purple;
+            color: purple;
+        }
+
+        .s7 {
+            background-color: grey;
+            color: grey;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>覚醒武器シミュ（太刀）</h1>
+    <div class="notice" style="width: 18cm;">注意<br>
+        ☆６スキルは「スキル1」に、防御VとスロットⅢは「スキル2」に、シリーズスキルは
+        「スキル5」にあります。<br>
+        また、本来複数選択できない「防御」と「スロット」が複数選択出来てしまう実装です。
+        許してください。
+    </div>
+    <form name="sim">
+        武器:
+        <select name="weapon">
+            <option value="1" label="赤龍ノ閃ク刃・火" selected="selected"></option>
+            <option value="1" label="赤龍ノ閃ク刃・水"></option>
+            <option value="1" label="赤龍ノ閃ク刃・雷"></option>
+            <option value="1" label="赤龍ノ閃ク刃・氷"></option>
+            <option value="1" label="赤龍ノ閃ク刃・龍"></option>
+            <option value="2" label="赤龍ノ閃ク刃・睡眠"></option>
+            <option value="2" label="赤龍ノ閃ク刃・麻痺"></option>
+            <option value="3" label="赤龍ノ閃ク刃・爆破"></option>
+            <option value="3" label="赤龍ノ閃ク刃・毒"></option>
+        </select>
+        <br>
+        スキル1:
+        <select name="skil_1">
+            <option value="atk" selected="selected">攻撃力強化VI</option>
+            <option value="crt">会心率強化VI</option>
+            <option value="elm">属性強化VI</option>
+            <option value="sharp">切れ味強化VI</option>
+            <option value="def">防御力強化VI</option>
+            <option value="slot">スロット強化IV</option>
+        </select>
+        <br>
+        スキル2:
+        <select name="skil_2">
+            <option value="atk" selected="selected">攻撃力強化V</option>
+            <option value="crt">会心率強化V</option>
+            <option value="elm">属性強化V</option>
+            <option value="sharp">切れ味強化V</option>
+            <option value="def">防御力強化V</option>
+            <option value="slot">スロット強化Ⅲ</option>
+        </select>
+        <br>
+        スキル3:
+        <select name="skil_3">
+            <option value="atk" selected="selected">攻撃力強化V</option>
+            <option value="crt">会心率強化V</option>
+            <option value="elm">属性強化V</option>
+            <option value="sharp">切れ味強化V</option>
+        </select>
+        <br>
+        スキル4:
+        <select name="skil_4">
+            <option value="atk" selected="selected">攻撃力強化V</option>
+            <option value="crt">会心率強化V</option>
+            <option value="elm">属性強化V</option>
+            <option value="sharp">切れ味強化V</option>
+        </select>
+        <br>
+        スキル5:
+        <select name="skil_5">
+            <option value="atk" selected="selected">攻撃力強化V</option>
+            <option value="crt">会心率強化V</option>
+            <option value="elm">属性強化V</option>
+            <option value="sharp">切れ味強化V</option>
+            <option value="series">シリーズスキル</option>
+        </select>
+        <br>
+        <input type="button" value="GO" name="go" onclick="
+            Go()">
+    </form>
+    <br>
+    <div class="result">
+        <table border="1">
+            <tr>
+                <th>攻撃力:</th>
+                <th id="atkResult"></th>
+            </tr>
+            <tr>
+                <th>会心率:</th>
+                <th id="crtResult"></th>
+            </tr>
+            <tr>
+                <th>属性値:</th>
+                <th id="elmResult"></th>
+            </tr>
+            <tr>
+                <th>スロット:</th>
+                <th id="slotResult"></th>
+            </tr>
+            <tr>
+                <th>切れ味:</th>
+                <th id="sharpResult" style="background-color: #ccc;">
+                    <div class="sbox">
+                        <span class="s0" id="s0"></span><!--
+                        --><span class="s1" id="s1"></span><!--
+                        --><span class="s2" id="s2"></span><!--
+                        --><span class="s3" id="s3"></span><!--                       
+                        --><span class="s4" id="s4"></span><!--
+                        --><span class="s5" id="s5"></span><!--
+                        --><span class="s6" id="s6"></span><!--
+                        --><span class="s7" id="s7"></span>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th>シリーズスキル:</th>
+                <th id="seriesResult"></th>
+            </tr>
+        </table>
+    </div>
+
+    <script type="text/javascript">
+        var critical;//会心率
+        var attack;//攻撃力
+        var slot;//スロット
+        var element;//属性値
+        var deffence;//防御力ボーナス
+        var skilInfo = [];
+        var sharp = [];//切れ味のデータ
+        var sharpLevel = [];//切れ味の強化レベルデータ
+        var series;//シリーズスキル情報
+        function Go() {
+            Reset();
+            if (sim.weapon.value == 1) {
+                element = 180;
+            } else if (sim.weapon.value == 2) {
+                element = 120;
+            } else {
+                element = 210;
+            }
+            //計算開始
+            //スキル１の情報
+            if (skilInfo[0] == "atk") {
+                attack += 50;
+            } else if (skilInfo[0] == "crt") {
+                critical += 15;
+            } else if (skilInfo[0] == "elm") {
+                if (sim.weapon.value == 1) {//属性が火水雷氷龍
+                    element += 120;
+                } else {//属性が睡眠麻痺毒爆破
+                    element += 50;
+                }
+            } else if (skilInfo[0] == "sharp") {
+                sharpLevel.push(6);
+            } else if (skilInfo[0] == "def") {
+                deffence += 60;
+            } else {
+                slot.push(4);
+            }
+            //スキル２以下の情報
+            for (let i = 1; i < skilInfo.length; i++) {
+                if (skilInfo[i] == "atk") {
+                    attack += 33;
+                } else if (skilInfo[i] == "crt") {
+                    critical += 10;
+                } else if (skilInfo[i] == "elm") {
+                    if (sim.weapon.value == 1) {//属性が火水雷氷龍
+                        element += 90;
+                    } else {//属性が睡眠麻痺毒爆破
+                        element += 30;
+                    }
+                } else if (skilInfo[i] == "sharp") {
+                    sharpLevel.push(5);
+                } else if (skilInfo[i] == "def") {
+                    deffence += 50;
+                } else if (skilInfo[i] == "slot") {
+                    slot.push(3);
+                } else {
+                    series = "あり";
+                }
+            }
+            CalSharpness();//切れ味計算
+            //結果の出力
+            var atkResult = document.getElementById("atkResult");
+            atkResult.innerHTML = attack;
+            var crtResult = document.getElementById("crtResult");
+            crtResult.innerHTML = critical;
+            var elmResult = document.getElementById("elmResult");
+            elmResult.innerHTML = element;
+            var slotResult = document.getElementById("slotResult");
+            slotResult.innerHTML = slot;
+            var seriesResult = document.getElementById("seriesResult");
+            seriesResult.innerHTML = series;
+            document.getElementById('s0').style.width = `${sharp[0]}px`;
+            document.getElementById('s1').style.width = `${sharp[1]}px`;
+            document.getElementById('s2').style.width = `${sharp[2]}px`;
+            document.getElementById('s3').style.width = `${sharp[3]}px`;
+            document.getElementById('s4').style.width = `${sharp[4]}px`;
+            document.getElementById('s5').style.width = `${sharp[5]}px`;
+            document.getElementById('s6').style.width = `${sharp[6]}px`;
+            document.getElementById('s7').style.width = `${sharp[7]}px`;
+
+        }
+        //切れ味計算
+        function CalSharpness() {
+            if (sharpLevel[0] == 6) {
+                switch (sharpLevel.length) {
+                    case 1://切れ味6
+                        sharp = [12, 20, 20, 20, 24, 44, 0, 20];
+                        break;
+                    case 2://切れ味65
+                        sharp = [4, 8, 20, 20, 24, 48, 16, 20];
+                        break;
+                    case 3://切れ味655
+                        sharp = [4, 4, 4, 20, 24, 48, 36, 20];
+                        break;
+                    case 4://切れ味6555
+                        sharp = [4, 4, 4, 4, 20, 48, 56, 20];
+                        break;
+                    case 5://切れ味65555
+                        sharp = [4, 4, 4, 4, 4, 44, 76, 20];
+                        break;
+                    default:;
+                }
+            } else if (sharpLevel[0] == 5) {
+                switch(sharpLevel.length){
+                    case 1://切れ味5
+                        sharp = [20, 20, 20, 20, 24, 36, 0, 20];
+                        break;
+                    case 2://切れ味55
+                        sharp = [4, 16, 20, 20, 24, 48, 8, 20];
+                        break;
+                    case 3://切れ味555
+                        sharp = [4, 4, 12, 20, 24, 48, 28, 20];
+                        break;
+                    case 4://切れ味5555
+                        sharp = [4, 4, 4, 8, 24, 48, 48, 20];
+                        break;
+                    default:;
+                }
+            }
+        }
+        function Reset() {
+            critical = 5;//会心率
+            attack = 891;//攻撃力
+            slot = [4];//スロット
+            element = 0;//属性値
+            deffence = 0;//防御力ボーナス
+            skilInfo = [sim.skil_1.value, sim.skil_2.value,
+            sim.skil_3.value, sim.skil_4.value, sim.skil_5.value];
+            sharp = [];//切れ味のデータ
+            sharp.push(40, 20, 20, 20, 24, 16, 0, 20);
+            sharpLevel = [];//切れ味の強化レベルデータ
+            series = "なし";//シリーズスキル情報
+        }
+
+    </script>
+    
+</body>
+
+</html>
